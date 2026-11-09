@@ -1,1223 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Smart Deals Market · preview</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: #f2f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 16px 0;
-    }
-
-    .mobile-frame {
-      max-width: 420px;
-      width: 100%;
-      background: white;
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.03);
-      position: relative;
-    }
-
-    .scroll-content {
-      max-height: 90vh;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      position: relative;
-    }
-
-    .notif-ribbon {
-      background: #111c3a;
-      color: white;
-      font-size: 11px;
-      font-weight: 500;
-      padding: 8px 16px;
-      text-align: center;
-      letter-spacing: 0.2px;
-    }
-
-    .header-sticky {
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 30;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #eef0f4;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-square {
-      width: 40px;
-      height: 40px;
-      background: #fcd34d;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      color: #111c3a;
-      letter-spacing: -0.5px;
-      box-shadow: 0 2px 6px rgba(252, 211, 77, 0.4);
-    }
-
-    .brand-name {
-      font-size: 16px;
-      font-weight: 800;
-      color: #111c3a;
-      line-height: 1.2;
-    }
-
-    .cart-pill {
-      background: #111c3a;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
-      box-shadow: 0 4px 10px rgba(17, 28, 58, 0.15);
-    }
-
-    .cart-pill i {
-      font-size: 16px;
-    }
-
-    .cart-pill:active {
-      transform: scale(0.96);
-    }
-
-    .hero {
-      background: #fcd34d;
-      padding: 24px 20px 28px;
-    }
-
-    .hero-badge {
-      background: #111c3a;
-      color: white;
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 40px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      font-weight: 800;
-      color: #111c3a;
-      line-height: 1.15;
-      margin-bottom: 14px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero p {
-      font-size: 15px;
-      color: #2d3b5c;
-      font-weight: 500;
-      line-height: 1.5;
-      margin-bottom: 24px;
-    }
-
-    .btn-primary {
-      display: block;
-      width: 100%;
-      background: #111c3a;
-      color: white;
-      border: none;
-      padding: 18px 20px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 16px;
-      text-align: center;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: all 0.15s;
-      box-shadow: 0 8px 18px rgba(17, 28, 58, 0.2);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    .btn-outline {
-      display: block;
-      width: 100%;
-      background: transparent;
-      color: #111c3a;
-      border: 2px solid #111c3a;
-      padding: 16px 20px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .btn-outline:active {
-      background: rgba(17, 28, 58, 0.05);
-    }
-
-    .highlights {
-      padding: 20px 16px 8px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .highlight-card {
-      background: #fefaf0;
-      border: 1.5px solid #fcd34d;
-      border-radius: 20px;
-      padding: 16px 14px;
-      flex: 1 1 40%;
-      min-width: 140px;
-    }
-
-    .highlight-card .big-number {
-      font-size: 30px;
-      font-weight: 800;
-      color: #d97706;
-      line-height: 1.1;
-      margin-bottom: 4px;
-    }
-
-    .highlight-card .desc {
-      font-size: 12px;
-      font-weight: 600;
-      color: #2d3b5c;
-      line-height: 1.4;
-    }
-
-    .checklist-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding: 16px;
-      background: #ffffff;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #111c3a;
-    }
-
-    .check-item i {
-      color: #f59e0b;
-      font-size: 14px;
-    }
-
-    .deals-section {
-      padding: 8px 16px 24px;
-    }
-
-    .deals-header h2 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #111c3a;
-      letter-spacing: -0.3px;
-    }
-
-    .deals-sub {
-      font-size: 13px;
-      font-weight: 500;
-      color: #5b6b8c;
-      margin-top: 4px;
-      margin-bottom: 16px;
-    }
-
-    .filter-row {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .filter-row::-webkit-scrollbar {
-      display: none;
-    }
-
-    .filter-btn {
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      background: #f1f3f7;
-      border: none;
-      color: #111c3a;
-      cursor: pointer;
-      transition: all 0.1s;
-    }
-
-    .filter-btn.active {
-      background: #111c3a;
-      color: white;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .product-card {
-      border-radius: 24px;
-      padding: 14px 12px 12px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-      transition: transform 0.1s;
-      border: 1px solid rgba(0, 0, 0, 0.02);
-      background: #ffffff;
-    }
-
-    .product-card.kitchen {
-      background: #fef9e7;
-    }
-
-    .product-card.kids {
-      background: #e3f0ff;
-    }
-
-    .product-card.home {
-      background: #ffe8e8;
-    }
-
-    .product-card.essentials {
-      background: #e4f5e9;
-    }
-
-    .product-card.soldout {
-      background: #eaeef3;
-      opacity: 0.9;
-      position: relative;
-    }
-
-    .card-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .discount-badge {
-      background: #ef4444;
-      color: white;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 30px;
-      letter-spacing: 0.2px;
-    }
-
-    .category-tag {
-      font-size: 10px;
-      font-weight: 600;
-      color: #6b7a9a;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 3px 8px;
-      border-radius: 30px;
-    }
-
-    .photo-placeholder {
-      border: 2px dashed #b0b8c8;
-      border-radius: 14px;
-      padding: 20px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .photo-placeholder i {
-      font-size: 28px;
-      color: #8e9bb3;
-      margin-bottom: 4px;
-    }
-
-    .photo-placeholder span {
-      font-size: 9px;
-      font-weight: 600;
-      color: #5f6c84;
-      letter-spacing: 0.4px;
-    }
-
-    .product-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: #111c3a;
-      line-height: 1.3;
-      margin-bottom: 8px;
-      min-height: 34px;
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .current-price {
-      font-size: 16px;
-      font-weight: 800;
-      color: #d62b2b;
-    }
-
-    .old-price {
-      font-size: 11px;
-      font-weight: 500;
-      color: #8e9bb3;
-      text-decoration: line-through;
-    }
-
-    .add-btn {
-      background: #1e3a8a;
-      color: white;
-      border: none;
-      border-radius: 40px;
-      padding: 10px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      width: 100%;
-      cursor: pointer;
-      transition: all 0.1s;
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .add-btn:active {
-      transform: scale(0.97);
-    }
-
-    .add-btn:disabled {
-      background: #9aa8c1;
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .soldout-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(1.5px);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .soldout-tag {
-      background: #111c3a;
-      color: white;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 8px 18px;
-      border-radius: 40px;
-      letter-spacing: 1px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-      transform: rotate(-8deg);
-    }
-
-    .about {
-      padding: 24px 20px;
-      background: #ffffff;
-    }
-
-    .about-label {
-      font-size: 12px;
-      font-weight: 800;
-      color: #d97706;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .about h3 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #111c3a;
-      line-height: 1.2;
-      margin-bottom: 14px;
-      letter-spacing: -0.3px;
-    }
-
-    .about p {
-      font-size: 14px;
-      color: #3b4b6c;
-      line-height: 1.6;
-      font-weight: 500;
-    }
-
-    .contact {
-      padding: 20px;
-      background: #f9fafc;
-    }
-
-    .contact h4 {
-      font-size: 18px;
-      font-weight: 800;
-      color: #111c3a;
-      margin-bottom: 16px;
-    }
-
-    .contact-card {
-      background: white;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 12px;
-      border: 1px solid #e9ecf2;
-    }
-
-    .contact-card .label {
-      font-size: 12px;
-      font-weight: 700;
-      color: #6b7a9a;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    .contact-card .value {
-      font-size: 15px;
-      font-weight: 700;
-      color: #111c3a;
-    }
-
-    .social-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .social-btn {
-      background: #111c3a;
-      color: white;
-      border: none;
-      border-radius: 40px;
-      padding: 10px 18px;
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .branding-footer {
-      background: #1f2937;
-      color: #b0b8c8;
-      padding: 18px 20px;
-      font-size: 11px;
-      font-weight: 500;
-      text-align: center;
-      line-height: 1.5;
-    }
-
-    .branding-footer strong {
-      color: white;
-      font-weight: 700;
-    }
-
-    /* Cart drawer */
-    .cart-drawer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(2px);
-      z-index: 100;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .cart-drawer.open {
-      display: flex;
-      animation: fadeIn 0.2s;
-    }
-
-    .cart-panel {
-      background: white;
-      border-radius: 32px 32px 24px 24px;
-      width: 100%;
-      max-width: 400px;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      animation: slideUp 0.25s ease;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 20px 10px;
-      border-bottom: 1px solid #eef0f4;
-    }
-
-    .cart-header h2 {
-      font-size: 20px;
-      font-weight: 800;
-      color: #111c3a;
-    }
-
-    .close-cart {
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #111c3a;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-    }
-
-    .close-cart:hover {
-      background: #f1f3f7;
-    }
-
-    .cart-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-height: 150px;
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cart-item-badge {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      color: #111c3a;
-      flex-shrink: 0;
-    }
-
-    .cart-item-badge.kitchen {
-      background: #fef9e7;
-    }
-
-    .cart-item-badge.kids {
-      background: #e3f0ff;
-    }
-
-    .cart-item-badge.home {
-      background: #ffe8e8;
-    }
-
-    .cart-item-badge.essentials {
-      background: #e4f5e9;
-    }
-
-    .cart-item-info {
-      flex: 1;
-    }
-
-    .cart-item-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #111c3a;
-      margin-bottom: 4px;
-    }
-
-    .cart-item-price {
-      font-size: 13px;
-      font-weight: 600;
-      color: #d62b2b;
-    }
-
-    .remove-item {
-      background: none;
-      border: none;
-      font-size: 12px;
-      font-weight: 600;
-      color: #8e9bb3;
-      cursor: pointer;
-      padding: 6px 8px;
-      border-radius: 20px;
-    }
-
-    .remove-item:hover {
-      background: #f1f3f7;
-      color: #ef4444;
-    }
-
-    .cart-footer {
-      padding: 16px 20px 20px;
-      border-top: 1px solid #eef0f4;
-      background: white;
-    }
-
-    .subtotal-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 16px;
-      font-weight: 800;
-      color: #111c3a;
-      margin-bottom: 14px;
-    }
-
-    .checkout-btn {
-      background: #111c3a;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 16px;
-      width: 100%;
-      font-weight: 700;
-      font-size: 16px;
-      cursor: pointer;
-      margin-bottom: 10px;
-      transition: 0.1s;
-    }
-
-    .checkout-btn:active {
-      transform: scale(0.98);
-    }
-
-    .notice-text {
-      font-size: 10px;
-      color: #6b7a9a;
-      font-weight: 500;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .empty-cart {
-      text-align: center;
-      padding: 30px 0;
-      color: #8e9bb3;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Deals Market | Potomac Mills</title>
+    
+    <!-- Tailwind CSS (Browser CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+    </style>
 </head>
-<body>
-  <div class="mobile-frame">
-    <div class="scroll-content" id="scrollContent">
+<body class="text-[#111c3a] antialiased min-h-screen flex justify-center items-start">
 
-      <div class="notif-ribbon">
-        SAMPLE PREVIEW · Your store will live at ://smartdealsmarket.com
-      </div>
+    <!-- Mobile Viewport Frame Canvas -->
+    <div class="w-full max-w-md bg-white min-h-screen flex flex-col relative shadow-2xl border-x border-gray-200">
+        
+        <!-- HEADER / NAVIGATION -->
+        <nav class="flex justify-between items-center px-6 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
+            <div class="flex items-center gap-2.5">
+                <!-- Branding Icon -->
+                <div class="bg-[#FCD34D] text-[#111C3A] w-8 h-8 rounded-lg flex items-center justify-center font-black text-lg shadow-inner">
+                    <i class="fa-solid fa-angle-up text-sm"></i>
+                </div>
+                <div class="flex flex-col leading-tight">
+                    <span class="text-xs font-black tracking-wider uppercase text-[#111C3A]">Smart Deals</span>
+                    <span class="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase">Market</span>
+                </div>
+            </div>
+            <!-- Burger Button -->
+            <button id="mobile-menu-btn" class="text-[#111C3A] hover:opacity-80 p-1 transition-opacity">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </nav>
 
-      <div class="header-sticky" id="stickyHeader">
-        <div class="logo-area">
-          <div class="logo-square">SD</div>
-          <span class="brand-name">Smart Deals Market</span>
-        </div>
-        <button class="cart-pill" id="cartPillBtn">
-          <i class="fas fa-shopping-cart"></i>
-          Cart ( <span id="cartCount">0</span> )
-        </button>
-      </div>
-
-      <div class="hero">
-        <div class="hero-badge">NEW DEALS EVERY WEEK</div>
-        <h1>Name-brand overstock.<br>Clearance prices.</h1>
-        <p>Quality home, kitchen, kids and everyday essentials from major retailers' overstock, at prices that make sense for real families.</p>
-        <button class="btn-primary">Shop this week's deals</button>
-        <button class="btn-outline">Our story</button>
-      </div>
-
-      <div class="highlights">
-        <div class="highlight-card">
-          <div class="big-number">50%+</div>
-          <div class="desc">off original retail on most items</div>
-        </div>
-        <div class="highlight-card">
-          <div class="big-number">Weekly</div>
-          <div class="desc">fresh stock drops, first come, first served</div>
-        </div>
-      </div>
-
-      <div class="checklist-grid">
-        <div class="check-item"><i class="fas fa-check-circle"></i> Secure card checkout</div>
-        <div class="check-item"><i class="fas fa-check-circle"></i> Clear prices, no surprises</div>
-        <div class="check-item"><i class="fas fa-check-circle"></i> New deals every week</div>
-        <div class="check-item"><i class="fas fa-check-circle"></i> Woman-owned small business</div>
-      </div>
-
-      <div class="deals-section">
-        <div class="deals-header">
-          <h2>This week's deals</h2>
-          <div class="deals-sub">Limited quantities. When it's gone, it's gone.</div>
-        </div>
-
-        <div class="filter-row" id="filterRow">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="kitchen">Kitchen</button>
-          <button class="filter-btn" data-filter="home">Home</button>
-          <button class="filter-btn" data-filter="kids">Kids</button>
-          <button class="filter-btn" data-filter="essentials">Essentials</button>
+        <!-- FULL SCREEN MOBILE MENU -->
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-[100] hidden flex-col">
+            <div class="flex justify-between items-center px-6 py-5 border-b border-gray-100">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-[#FCD34D] text-[#111C3A] w-8 h-8 rounded-lg flex items-center justify-center font-black text-lg">
+                        <i class="fa-solid fa-angle-up text-sm"></i>
+                    </div>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-xs font-black tracking-wider uppercase text-[#111C3A]">Smart Deals</span>
+                        <span class="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase">Market</span>
+                    </div>
+                </div>
+                <button id="mobile-close-btn" class="text-[#111C3A] hover:opacity-80 p-1">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 px-6 pt-10">
+                <a href="#hero" class="text-2xl font-black text-[#111C3A]">Home</a>
+                <a href="#rules" class="text-2xl font-black text-[#111C3A]">Store Rules</a>
+                <a href="#inventory" class="text-2xl font-black text-[#111C3A]">Inventory</a>
+                <a href="#location" class="text-2xl font-black text-[#111C3A]">Find Us</a>
+                <a href="#location" class="text-2xl font-black text-[#111C3A]">Hours</a>
+                <a href="#location" class="w-full bg-[#111C3A] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 mt-4 shadow-md">
+                    <i class="fa-solid fa-location-dot text-[#FCD34D]"></i> Get Directions
+                </a>
+                <a href="tel:+15717039796" class="w-full border-2 border-[#111C3A] bg-transparent text-[#111C3A] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all hover:bg-[#111C3A]/5">
+                    <i class="fa-solid fa-phone"></i> (571) 703-9796
+                </a>
+            </div>
         </div>
 
-        <div class="product-grid" id="productGrid">
-          <!-- Product 1: Kitchen -->
-          <div class="product-card kitchen" data-product-id="1" data-category="kitchen" data-name="Stainless Steel Cookware Set, 10 pieces" data-price="39.99">
-            <div class="card-top-row">
-              <span class="discount-badge">56% OFF</span>
-              <span class="category-tag">Kitchen</span>
+        <!-- HERO SECTION -->
+        <main id="hero" class="bg-[#FCD34D] px-6 pt-12 pb-12 flex flex-col justify-start">
+            <h1 class="text-[38px] font-black tracking-tight leading-[1.1] mb-6 text-[#111C3A]">
+                Big Brands.<br>
+                <span class="text-white drop-shadow-sm">Unbeatable Prices.</span><br>
+                Right Around The Corner.
+            </h1>
+            <p class="text-[#2b3a61] text-sm font-semibold leading-relaxed mb-10 pr-2">
+                Potomac Mills' premier liquidation outlet for home essentials, furniture, luggage, and daily surprises. New truckloads arrive weekly — when it's gone, it's gone.
+            </p>
+            <div class="space-y-3.5 w-full">
+                <a href="https://www.google.com/maps/search/?api=1&query=2700+Potomac+Mills+Circle+Woodbridge+VA+22192" target="_blank" class="w-full bg-[#111C3A] hover:bg-[#1a2b5a] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-md shadow-[#111C3A]/10 text-sm">
+                    <i class="fa-solid fa-location-dot text-sm text-[#FCD34D]"></i> Find Us Inside the Mall
+                </a>
+                <a href="https://www.instagram.com/smartdealsmarket_" target="_blank" class="w-full border-2 border-[#111C3A] bg-transparent text-[#111C3A] font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 transition-all text-sm hover:bg-[#111C3A]/5">
+                    <i class="fa-brands fa-instagram text-sm"></i> See This Week's Arrivals
+                </a>
             </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Stainless Steel Cookware Set, 10 pieces</div>
-            <div class="price-row">
-              <span class="current-price">$39.99</span>
-              <span class="old-price">$89.99</span>
-            </div>
-            <button class="add-btn" data-id="1">Add to cart</button>
-          </div>
+        </main>
 
-          <!-- Product 2: Kids -->
-          <div class="product-card kids" data-product-id="2" data-category="kids" data-name="Building Blocks Creative Kit, 500 pieces" data-price="14.99">
-            <div class="card-top-row">
-              <span class="discount-badge">57% OFF</span>
-              <span class="category-tag">Kids</span>
+        <!-- MARQUEE / TICKER -->
+        <div class="bg-[#111C3A] text-[#FCD34D] py-3 overflow-hidden whitespace-nowrap text-xs font-bold uppercase tracking-widest flex gap-8">
+            <div class="flex gap-8 animate-[marquee_20s_linear_infinite] min-w-full">
+                <span>Weekly Truckloads</span> <span>•</span>
+                <span>Up to 70% Off MSRP</span> <span>•</span>
+                <span>Potomac Mills Mall</span> <span>•</span>
+                <span>All Sales Final</span>
             </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Building Blocks Creative Kit, 500 pieces</div>
-            <div class="price-row">
-              <span class="current-price">$14.99</span>
-              <span class="old-price">$34.99</span>
-            </div>
-            <button class="add-btn" data-id="2">Add to cart</button>
-          </div>
-
-          <!-- Product 3: Home -->
-          <div class="product-card home" data-product-id="3" data-category="home" data-name="Plush Sherpa Throw Blanket" data-price="12.99">
-            <div class="card-top-row">
-              <span class="discount-badge">57% OFF</span>
-              <span class="category-tag">Home</span>
-            </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Plush Sherpa Throw Blanket</div>
-            <div class="price-row">
-              <span class="current-price">$12.99</span>
-              <span class="old-price">$29.99</span>
-            </div>
-            <button class="add-btn" data-id="3">Add to cart</button>
-          </div>
-
-          <!-- Product 4: Essentials -->
-          <div class="product-card essentials" data-product-id="4" data-category="essentials" data-name="Laundry Detergent, 2-pack" data-price="9.99">
-            <div class="card-top-row">
-              <span class="discount-badge">50% OFF</span>
-              <span class="category-tag">Essentials</span>
-            </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Laundry Detergent, 2-pack</div>
-            <div class="price-row">
-              <span class="current-price">$9.99</span>
-              <span class="old-price">$19.99</span>
-            </div>
-            <button class="add-btn" data-id="4">Add to cart</button>
-          </div>
-
-          <!-- Product 5: Kitchen -->
-          <div class="product-card kitchen" data-product-id="5" data-category="kitchen" data-name="Digital Air Fryer, 5 qt" data-price="44.99">
-            <div class="card-top-row">
-              <span class="discount-badge">55% OFF</span>
-              <span class="category-tag">Kitchen</span>
-            </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Digital Air Fryer, 5 qt</div>
-            <div class="price-row">
-              <span class="current-price">$44.99</span>
-              <span class="old-price">$99.99</span>
-            </div>
-            <button class="add-btn" data-id="5">Add to cart</button>
-          </div>
-
-          <!-- Product 6: Home -->
-          <div class="product-card home" data-product-id="6" data-category="home" data-name="LED Desk Lamp with USB Port" data-price="11.99">
-            <div class="card-top-row">
-              <span class="discount-badge">52% OFF</span>
-              <span class="category-tag">Home</span>
-            </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">LED Desk Lamp with USB Port</div>
-            <div class="price-row">
-              <span class="current-price">$11.99</span>
-              <span class="old-price">$24.99</span>
-            </div>
-            <button class="add-btn" data-id="6">Add to cart</button>
-          </div>
-
-          <!-- Product 7: Sold Out -->
-          <div class="product-card soldout" data-product-id="7" data-category="home" data-name="Sold Out Item" data-price="0">
-            <div class="card-top-row">
-              <span class="discount-badge">SOLD OUT</span>
-              <span class="category-tag">Home</span>
-            </div>
-            <div class="photo-placeholder">
-              <i class="fas fa-camera"></i>
-              <span>YOUR PRODUCT PHOTO</span>
-            </div>
-            <div class="product-title">Sold Out Item</div>
-            <div class="price-row">
-              <span class="current-price">$0.00</span>
-              <span class="old-price">$49.99</span>
-            </div>
-            <button class="add-btn" disabled style="background: #9aa8c1; opacity:0.7; cursor:not-allowed;">Sold out</button>
-            <div class="soldout-overlay">
-              <div class="soldout-tag">SOLD OUT</div>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <div class="about">
-        <div class="about-label">ABOUT US</div>
-        <h3>Great deals for budget-conscious families.</h3>
-        <p>Smart Deals Market is a woman-owned clearance and overstock store. We bring you quality overstock from major national retailers, plus everyday essentials from small vendors, so you can save on the things your family actually uses. Our deals rotate every week. Prices are always clear, and when an item sells out it comes off the shelf, so what you see is what's in stock.</p>
-      </div>
+        <!-- STORE RULES -->
+        <section id="rules" class="bg-white px-6 py-12 border-b border-gray-100">
+            <div class="mb-8">
+                <span class="text-[#EF4444] text-[10px] font-black tracking-[0.2em] uppercase">How We Work</span>
+                <h2 class="text-2xl font-black text-[#111C3A] mt-1">The rules of the hunt.</h2>
+            </div>
+            <div class="space-y-4">
+                <!-- Rule 1 -->
+                <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-black text-lg text-[#111C3A]">Weekly Truckloads</h3>
+                        <span class="bg-[#EF4444] text-white text-[9px] font-bold px-2 py-1 rounded-md tracking-wider">FRESH</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium leading-relaxed">Fresh closeout inventory arriving constantly. What you see today might be gone tomorrow.</p>
+                </div>
+                <!-- Rule 2 -->
+                <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-black text-lg text-[#111C3A]">First Come, First Served</h3>
+                        <span class="bg-[#EF4444] text-white text-[9px] font-bold px-2 py-1 rounded-md tracking-wider">NO HOLDS</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium leading-relaxed">We cannot hold items. If you love it, grab it before it's gone!</p>
+                </div>
+                <!-- Rule 3 -->
+                <div class="p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-black text-lg text-[#111C3A]">All Sales Final</h3>
+                        <span class="bg-[#EF4444] text-white text-[9px] font-bold px-2 py-1 rounded-md tracking-wider">AS-IS</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium leading-relaxed">We pass massive savings directly to you. Inspect your items in-store.</p>
+                </div>
+            </div>
+        </section>
 
-      <div class="contact">
-        <h4>Contact & follow us</h4>
-        <div class="contact-card">
-          <div class="label"><i class="fas fa-map-pin" style="margin-right:6px;"></i> Location</div>
-          <div class="value">Manassas, Virginia</div>
-        </div>
-        <div class="contact-card">
-          <div class="label"><i class="fas fa-phone-alt" style="margin-right:6px;"></i> Phone / Email</div>
-          <div class="value">(555) 123-4567 · hello@smartdeals.market</div>
-        </div>
-        <div class="contact-card">
-          <div class="label"><i class="fas fa-hashtag" style="margin-right:6px;"></i> Follow the weekly drops</div>
-          <div class="social-row">
-            <button class="social-btn"><i class="fab fa-facebook-f"></i> Facebook</button>
-            <button class="social-btn"><i class="fab fa-tiktok"></i> TikTok</button>
-          </div>
-        </div>
-      </div>
+        <!-- INVENTORY -->
+        <section id="inventory" class="bg-gray-50 px-6 py-12 border-b border-gray-100">
+            <div class="mb-8">
+                <span class="text-[#111C3A] text-[10px] font-black tracking-[0.2em] uppercase opacity-50">Revolving Stock</span>
+                <h2 class="text-2xl font-black text-[#111C3A] mt-1">This week's treasure map.</h2>
+            </div>
+            <div class="space-y-4">
+                <!-- Category 1 -->
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-black text-[#111C3A]">Home Styling</h3>
+                        <span class="text-[#EF4444] font-black text-xs">40-70% OFF</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium">Accent chairs, lighting, rugs, decor.</p>
+                </div>
+                <!-- Category 2 -->
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-black text-[#111C3A]">Kitchen & Hosting</h3>
+                        <span class="text-[#EF4444] font-black text-xs">50-75% OFF</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium">Cookware sets, stoneware, glassware.</p>
+                </div>
+                <!-- Category 3 -->
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-black text-[#111C3A]">Travel & Luggage</h3>
+                        <span class="text-[#EF4444] font-black text-xs">45-70% OFF</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-medium">Carry-ons, travel bags, organizers.</p>
+                </div>
+            </div>
+        </section>
 
-      <div class="branding-footer">
-        <strong>Smart Deals Market</strong><br>
-        Sample preview - Products, photos and prices are placeholders.
-      </div>
+        <!-- LOCATION & HOURS -->
+        <footer id="location" class="bg-white px-6 py-12 flex-1">
+            <div class="mb-8">
+                <span class="text-[#EF4444] text-[10px] font-black tracking-[0.2em] uppercase">Find The Treasure</span>
+                <h2 class="text-2xl font-black text-[#111C3A] mt-1">Inside Potomac Mills.</h2>
+            </div>
+            
+            <div class="w-full h-48 bg-gray-200 rounded-2xl mb-6 overflow-hidden border border-gray-200">
+                <iframe src="https://www.google.com/maps?q=2700+Potomac+Mills+Circle,+Woodbridge,+VA+22192&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="bg-[#FCD34D]/20 p-5 rounded-2xl border border-[#FCD34D] mb-6">
+                <h3 class="font-black text-[#111C3A] mb-1 flex items-center gap-2"><i class="fa-solid fa-location-dot text-[#FCD34D]"></i> Address</h3>
+                <p class="text-xs text-[#2b3a61] font-semibold mb-4">2700 Potomac Mills Circle, Woodbridge, VA 22192 (Across from T.J. Maxx)</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=2700+Potomac+Mills+Circle+Woodbridge+VA+22192" target="_blank" class="w-full bg-[#111C3A] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs shadow-md mb-2">
+                    Get Directions
+                </a>
+                <a href="tel:+15717039796" class="w-full border-2 border-[#111C3A] text-[#111C3A] font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-phone"></i> (571) 703-9796
+                </a>
+            </div>
+
+            <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                <h3 class="font-black text-[#111C3A] mb-3 flex items-center gap-2"><i class="fa-regular fa-clock text-[#111C3A]"></i> Hours</h3>
+                <div class="flex justify-between text-xs font-bold text-gray-600 mb-2 border-b border-gray-200 pb-2">
+                    <span>Mon – Sat</span> <span class="text-[#111C3A]">10:00 AM – 9:00 PM</span>
+                </div>
+                <div class="flex justify-between text-xs font-bold text-gray-600">
+                    <span>Sunday</span> <span class="text-[#111C3A]">11:00 AM – 6:00 PM</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 pt-6 border-t border-gray-100">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">© 2024 Smart Deals Market</p>
+            </div>
+        </footer>
 
     </div>
-  </div>
 
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-panel">
-      <div class="cart-header">
-        <h2>Your cart</h2>
-        <button class="close-cart" id="closeCartBtn"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="cart-items" id="cartItems">
-        <div class="empty-cart">Your cart is empty</div>
-      </div>
-      <div class="cart-footer">
-        <div class="subtotal-row">
-          <span>Subtotal</span>
-          <span id="cartSubtotal">$0.00</span>
-        </div>
-        <button class="checkout-btn">Checkout with card</button>
-        <div class="notice-text">On your live store, this opens secure checkout: cards, Apple Pay and Google Pay, paid straight to your account.</div>
-      </div>
-    </div>
-  </div>
+    <!-- JAVASCRIPT -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('#mobile-menu a');
 
-  <script>
-    (function() {
-      // ---------- 1. CART STATE (loaded from localStorage) ----------
-      const STORAGE_KEY = 'smartdeals_cart';
-      let cart = [];
-
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          cart = JSON.parse(saved);
-          if (!Array.isArray(cart)) cart = [];
-        }
-      } catch (e) {
-        cart = [];
-      }
-
-      function saveCart() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
-        } catch (e) {}
-      }
-
-      // DOM elements
-      const cartDrawer = document.getElementById('cartDrawer');
-      const cartPillBtn = document.getElementById('cartPillBtn');
-      const closeCartBtn = document.getElementById('closeCartBtn');
-      const cartItemsContainer = document.getElementById('cartItems');
-      const cartSubtotal = document.getElementById('cartSubtotal');
-      const cartCountSpan = document.getElementById('cartCount');
-
-      // Product map
-      const productMap = {};
-
-      // ---------- 2. BUILD PRODUCT MAP ----------
-      document.querySelectorAll('.product-card[data-product-id]').forEach(card => {
-        const id = card.dataset.productId;
-        const name = card.dataset.name;
-        const price = parseFloat(card.dataset.price);
-        const category = card.dataset.category;
-        if (id) {
-          productMap[id] = { id, name, price, category };
-        }
-      });
-
-      // ---------- 3. UPDATE CART UI ----------
-      function updateCartUI() {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountSpan.textContent = totalItems;
-
-        // Update add buttons
-        document.querySelectorAll('.product-card[data-product-id] .add-btn').forEach(btn => {
-          const productId = btn.closest('.product-card').dataset.productId;
-          if (!productId) return;
-          const cartItem = cart.find(item => item.id === productId);
-          if (cartItem && cartItem.quantity > 0) {
-            btn.innerHTML = `Add another (${cartItem.quantity} in cart)`;
-          } else {
-            btn.innerHTML = 'Add to cart';
-          }
+        // Open Menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
         });
 
-        // Render cart items
-        if (cart.length === 0) {
-          cartItemsContainer.innerHTML = `<div class="empty-cart">Your cart is empty</div>`;
-          cartSubtotal.textContent = '$0.00';
-          return;
-        }
-
-        cartItemsContainer.innerHTML = '';
-        let subtotal = 0;
-
-        cart.forEach(item => {
-          subtotal += item.price * item.quantity;
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'cart-item';
-          const badgeClass = item.category || 'kitchen';
-          itemDiv.innerHTML = `
-            <div class="cart-item-badge ${badgeClass}">${item.name.charAt(0)}</div>
-            <div class="cart-item-info">
-              <div class="cart-item-name">${item.name}</div>
-              <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)} ${item.quantity > 1 ? `(x${item.quantity})` : ''}</div>
-            </div>
-            <button class="remove-item" data-remove-id="${item.id}">Remove</button>
-          `;
-          cartItemsContainer.appendChild(itemDiv);
+        // Close Menu via X
+        mobileCloseBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
         });
 
-        // Attach remove listeners
-        document.querySelectorAll('.remove-item').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const id = e.target.dataset.removeId;
-            removeFromCart(id);
-          });
+        // Close Menu & Smooth Scroll when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                }
+            });
         });
-
-        cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-      }
-
-      // ---------- 4. ADD TO CART ----------
-      function addToCart(productId) {
-        const product = productMap[productId];
-        if (!product || product.price <= 0) return;
-
-        const existing = cart.find(item => item.id === productId);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            category: product.category,
-            quantity: 1
-          });
-        }
-        saveCart();
-        updateCartUI();
-      }
-
-      // ---------- 5. REMOVE FROM CART ----------
-      function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        saveCart();
-        updateCartUI();
-      }
-
-      // ---------- 6. ADD BUTTON LISTENERS ----------
-      document.querySelectorAll('.product-card[data-product-id] .add-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const card = btn.closest('.product-card');
-          if (card.classList.contains('soldout')) return;
-          const productId = card.dataset.productId;
-          if (productId) addToCart(productId);
-        });
-      });
-
-      // ---------- 7. OPEN / CLOSE CART ----------
-      function openCart() {
-        cartDrawer.classList.add('open');
-      }
-
-      function closeCart() {
-        cartDrawer.classList.remove('open');
-      }
-
-      cartPillBtn.addEventListener('click', openCart);
-      closeCartBtn.addEventListener('click', closeCart);
-
-      cartDrawer.addEventListener('click', (e) => {
-        if (e.target === cartDrawer) closeCart();
-      });
-
-      // ---------- 8. CATEGORY FILTERING ----------
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      const productCards = document.querySelectorAll('.product-card[data-category]');
-
-      function applyFilter(filter) {
-        productCards.forEach(card => {
-          const category = card.dataset.category;
-          if (filter === 'all' || category === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      }
-
-      filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          applyFilter(filter);
-        });
-      });
-
-      // ---------- 9. INIT ----------
-      updateCartUI();
-      applyFilter('all');
-
-    })();
-  </script>
+    </script>
 </body>
 </html>
